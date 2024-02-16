@@ -14,10 +14,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     * defined connection endpoint
     * */
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws")
-                .setAllowedOriginPatterns("*")
-                .withSockJS();
+    public void registerStompEndpoints(StompEndpointRegistry registry) { // ใช้กำหนดpathที่client connect to server
+        registry.addEndpoint("/ws") // connect via localhost:8080/ws
+                .setAllowedOriginPatterns("*") // * allow ip from anywhere
+                .withSockJS(); // using javascript library
     }
 
 
@@ -26,9 +26,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
      * @param registry
      */
     @Override
+    // use to define where(via) to receive and where to broadcast
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry
-                .setApplicationDestinationPrefixes("/app")
-                .enableSimpleBroker("/topic");
+                .setApplicationDestinationPrefixes("/app") // receive via localhost:8080/app
+                .enableSimpleBroker("/topic"); // broadcast via chanel topic (but topic doesn't with url)
     }
 }
